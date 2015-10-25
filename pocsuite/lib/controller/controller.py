@@ -45,11 +45,7 @@ def start():
     result_success = 0
     for row in kb.results:
         result_success += row.count("success")
-        print row
-        try:
-            resultTable.add_row(list(row)[:-2])
-        except:
-            pass
+        resultTable.add_row(list(row)[:-2])
     print resultTable
     print "success : %s" % str(result_success)
 
