@@ -60,7 +60,7 @@ def pcsInit(PCS_OPTIONS=None):
         dataToStdout("[*] starting at %s\n\n" % time.strftime("%X"))
 
         init()
-        start()
+        return start()
 
     except PocsuiteUserQuitException:
         errMsg = "user quit"

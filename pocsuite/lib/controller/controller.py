@@ -45,7 +45,10 @@ def start():
     result_success = 0
     for row in kb.results:
         result_success += row.count("success")
-        resultTable.add_row(list(row)[:-1])
+        try:
+            resultTable.add_row(list(row)[:-1])
+        except:
+            pass
     print resultTable
     print "success : %s" % str(result_success)
 
@@ -54,6 +57,8 @@ def start():
 
     if conf.report:
         _setReport()
+
+    return kb.results
 
 
 def pocThreads():
@@ -73,7 +78,10 @@ def pocThreads():
             result = poc.execute(target, headers=conf.httpHeaders, mode=conf.mode, params=conf.params, verbose=True)
             if not result:
                 continue
-            output = (target, pocname, result.vulID, result.appName, result.appVersion, "success" if result.is_success() else "failed", time.strftime("%Y-%m-%d %X", time.localtime()))
+            output = (target, pocname, result.vulID, result.appName, \
+                      result.appVersion, "success" if result.is_success() \
+                      else "failed", \
+                      time.strftime("%Y-%m-%d %X", time.localtime()), result)
             result.show_result()
 
         kb.results.add(output)
@@ -108,7 +116,7 @@ def _createTargetDirs():
 
 
 def _setRecordFiles():
-    for (target, pocname, pocid, component, version, status, time) in kb.results:
+    for (target, pocname, pocid, component, version, status, time, _) in kb.results:
         outputPath = os.path.join(getUnicode(paths.POCSUITE_OUTPUT_PATH), normalizeUnicode(getUnicode(target)))
 
         if not os.path.isdir(outputPath):

@@ -23,6 +23,8 @@ if __name__ == "__main__":
         dataToStdout(excMsg)
         sys.exit(1)
 
+    print 'pocssss' + pocFile
+
     PCS_OPTIONS.update({'url': targetUrl, 'pocFile': pocFile, 'headers': None, 'extra_params': None})
-    pcsInit(PCS_OPTIONS)
-    banner()
+    print pcsInit(PCS_OPTIONS)
+    # banner()
